@@ -1,0 +1,52 @@
+# Helps with VNET DNS resolving especially ipv6. Without it my VNET jails
+# end up with empty resolve.conf on reboot.
+CP /etc/resolvconf.conf etc/resolvconf.conf
+
+CMD printf '####\n#### Setup: Mounts and Permissions\n####\n'
+# share pkg cache between host/jails
+CMD mkdir -p /var/cache/pkg
+MOUNT /var/cache/pkg var/cache/pkg nullfs rw 0 0
+# Setup home directory
+CMD mkdir /root/.config
+CMD mkdir /root/.dotfiles
+CMD mkdir -p /root/.local/bin
+CMD mkdir -p /root/.local/share
+# Mount shared dotfiles
+MOUNT /tank/Services/Jail-Share/.dotfiles root/.dotfiles nullfs ro 0 0
+
+CMD printf '####\n#### Setup: SYSRC\n####\n'
+# Tweak bastille's rc.conf
+CMD sysrc sendmail_enable="NONE"
+CMD dumpdev="NO"
+
+CMD printf '####\n#### Install Programs\n####\n'
+# Set PKG to latest, create FreeBSD.conf.bak
+CMD sed -i .bak "s/quarterly/latest/g" /etc/pkg/FreeBSD.conf
+# Install programs
+PKG git-lite htop neovim tree xstow
+
+# Set Jail password, better than nothing
+CMD echo "CHANGEME" | pw usermod root -h 0
+
+CMD rm /root/.cshrc
+CMD rm /root/.shrc
+CMD rm /root/.k5login
+CMD rm /root/.login
+CMD rm /root/.profile
+
+# Setup configs
+CMD xstow -d /root/.dotfiles bin-files
+CMD xstow -d /root/.dotfiles cheat
+CMD xstow -d /root/.dotfiles git
+CMD xstow -d /root/.dotfiles nvim
+CMD xstow -d /root/.dotfiles tcsh-root
+
+CMD printf '####\n#### Setup: Overlay etc\n####\n'
+OVERLAY etc
+
+CMD printf '####\n#### Nuke default logs\n####\n'
+CMD rm -rfv /var/log/*
+
+CMD printf '####\n#### Setup: Post commands\n####\n'
+# Date the Jails creation
+CMD touch /root/"Created_`date +"%m_%d_%Y"`"

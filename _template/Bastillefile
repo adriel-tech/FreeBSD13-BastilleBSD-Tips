@@ -1,0 +1,24 @@
+CMD printf '####\n#### Setup: Defaults\n####\n'
+INCLUDE /usr/local/bastille/templates/FreeBSD13-BastilleBSD-Tips/default-configs
+
+CMD printf '####\n#### Setup: Mounts and Permissions\n####\n'
+#CMD mkdir -p /usr/local/etc/letsencrypt
+#MOUNT /zroot/jails/share/ule-letsencrypt usr/local/etc/letsencrypt nullfs ro 0 0
+
+CMD printf '####\n#### Setup: SYSRC\n####\n'
+#SYSRC goaccess_enable="YES"
+#SYSRC nginx_enable="YES"
+
+CMD printf '####\n#### Install Programs\n####\n'
+#PKG goaccess nginx-devel
+
+CMD printf '####\n#### Setup: Pre start commands\n####\n'
+#CMD nginx -t
+
+CMD printf '####\n#### Setup: Overlay etc\n####\n'
+#OVERLAY etc
+
+CMD printf '####\n#### Start Services\n####\n'
+#SERVICE nginx start
+
+CMD printf '####\n#### Setup: Post commands\n####\n'

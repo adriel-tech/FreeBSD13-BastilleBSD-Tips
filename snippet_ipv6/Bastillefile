@@ -1,0 +1,7 @@
+CMD printf '####\n#### SYSRC\n####\n'
+## IPv6 Settings
+SYSRC ipv6_privacy="YES"
+SYSRC ipv6_activate_all_interfaces="YES"
+#SYSRC ip6addrctl_policy="ipv4_prefer"
+SYSRC rtsold_enable="YES"
+SYSRC rtsold_flags="-aFm"

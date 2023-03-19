@@ -1,0 +1,12 @@
+
+CMD printf '####\n#### SYSRC\n####\n'
+
+## PF
+SYSRC pf_enable="YES"
+SYSRC pf_rules="/etc/pf.conf"
+SYSRC pflog_enable="YES"
+SYSRC pflog_logfile="/var/log/pflog"
+CMD touch /var/log/pflog
+
+OVERLAY etc
+
