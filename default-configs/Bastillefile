@@ -36,7 +36,6 @@ CMD rm /root/.profile
 
 # Setup configs
 CMD xstow -d /root/.dotfiles bin-files
-CMD xstow -d /root/.dotfiles cheat
 CMD xstow -d /root/.dotfiles git
 CMD xstow -d /root/.dotfiles nvim
 CMD xstow -d /root/.dotfiles tcsh-root
