@@ -12,7 +12,7 @@ CMD mkdir /root/.dotfiles
 CMD mkdir -p /root/.local/bin
 CMD mkdir -p /root/.local/share
 # Mount shared dotfiles
-MOUNT /zroot/usr/local/jails/share/dotfiles root/.dotfiles nullfs ro 0 0
+MOUNT /usr/local/jails/share/dotfiles root/.dotfiles nullfs ro 0 0
 
 CMD printf '####\n#### Setup: SYSRC\n####\n'
 # Tweak bastille's rc.conf
