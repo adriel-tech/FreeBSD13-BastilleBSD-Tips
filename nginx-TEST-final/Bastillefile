@@ -1,7 +1,8 @@
 CMD printf '####\n#### Setup: Defaults\n####\n'
 INCLUDE /usr/local/bastille/templates/adriel-tech/FreeBSD13-BastilleBSD-Tips/default-configs
 INCLUDE /usr/local/bastille/templates/adriel-tech/FreeBSD13-BastilleBSD-Tips/snippet_ipv6
-INCLUDE /usr/local/bastille/templates/adriel-tech/FreeBSD13-BastilleBSD-Tips/snippet_pf
+# Disabling snippet_pf as we took the template and customized it for this specifc jail.
+#INCLUDE /usr/local/bastille/templates/adriel-tech/FreeBSD13-BastilleBSD-Tips/snippet_pf
 
 CMD printf '####\n#### Setup: Mounts and Permissions\n####\n'
 CMD mkdir -p /usr/local/etc/letsencrypt
@@ -11,6 +12,12 @@ MOUNT /usr/local/jails/nginx-TEST/ul-www usr/local/www nullfs rw 0 0
 CMD mkdir -p /usr/local/etc/nginx
 MOUNT /usr/local/jails/nginx-TEST/ule-nginx usr/local/etc/nginx nullfs rw 0 0
 
+# No need to init goaccess, just needed to do it once as the files are saved on the host.
+## Init goaccess
+#CMD mkdir -p /usr/local/www/goaccess
+#CMD touch /usr/local/www/goaccess/index.html
+#CMD chmod 644 /usr/local/www/goaccess/index.html
+
 CMD printf '####\n#### Setup: SYSRC\n####\n'
 SYSRC goaccess_enable="YES"
 SYSRC nginx_enable="YES"
@@ -19,7 +26,10 @@ CMD printf '####\n#### Install Programs\n####\n'
 PKG goaccess nginx-devel py39-certbot
 
 CMD printf '####\n#### Setup: Overlay etc\n####\n'
+# overlay our etc and usr/local/etc which we copied into template.
+# pf.conf and goaccess config.
 OVERLAY etc
+OVERLAY usr
 
 CMD printf '####\n#### Setup: Pre start commands\n####\n'
 CMD printf 'Cron Error is normal. ..lol'
