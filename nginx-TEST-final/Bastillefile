@@ -17,7 +17,7 @@ CMD printf '####\n#### Install Programs\n####\n'
 PKG goaccess nginx-devel py39-certbot
 
 CMD printf '####\n#### Setup: Overlay etc\n####\n'
-#OVERLAY etc # We don't need this yet.
+OVERLAY etc
 
 CMD printf '####\n#### Setup: Pre start commands\n####\n'
 CMD nginx -t

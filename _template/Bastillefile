@@ -1,5 +1,5 @@
 CMD printf '####\n#### Setup: Defaults\n####\n'
-INCLUDE /usr/local/bastille/templates/FreeBSD13-BastilleBSD-Tips/default-configs
+INCLUDE /usr/local/bastille/templates/adriel-tech/FreeBSD13-BastilleBSD-Tips/default-configs
 
 CMD printf '####\n#### Setup: Mounts and Permissions\n####\n'
 #CMD mkdir -p /usr/local/etc/letsencrypt
