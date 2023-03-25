@@ -5,9 +5,16 @@ INCLUDE /usr/local/bastille/templates/adriel-tech/FreeBSD13-BastilleBSD-Tips/sni
 
 CMD printf '####\n#### Setup: Mounts and Permissions\n####\n'
 CMD mkdir -p /usr/local/etc/letsencrypt
-MOUNT /zroot/usr/local/jails/share/ule-letsencrypt usr/local/etc/letsencrypt nullfs ro 0 0
+MOUNT /usr/local/jails/share/ule-letsencrypt usr/local/etc/letsencrypt nullfs ro 0 0
+CMD mkdir -p /usr/local/etc/www
+MOUNT /usr/local/jails/nginx-TEST/ul-www usr/local/www nullfs rw 0 0
 CMD mkdir -p /usr/local/etc/nginx
-MOUNT /zroot/usr/local/jails/nginx-TEST/ule-nginx usr/local/etc/nginx nullfs rw 0 0
+MOUNT /usr/local/jails/nginx-TEST/ule-nginx usr/local/etc/nginx nullfs rw 0 0
+
+## Init goaccess
+CMD mkdir -p /usr/local/www/goaccess
+CMD touch /usr/local/www/goaccess/index.html
+CMD chmod 644 /usr/local/www/goaccess/index.html
 
 CMD printf '####\n#### Setup: SYSRC\n####\n'
 SYSRC goaccess_enable="YES"

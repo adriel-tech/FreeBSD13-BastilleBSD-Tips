@@ -5,9 +5,11 @@ INCLUDE /usr/local/bastille/templates/adriel-tech/FreeBSD13-BastilleBSD-Tips/sni
 
 CMD printf '####\n#### Setup: Mounts and Permissions\n####\n'
 CMD mkdir -p /usr/local/etc/letsencrypt
-MOUNT /zroot/usr/local/jails/share/ule-letsencrypt usr/local/etc/letsencrypt nullfs ro 0 0
+MOUNT /usr/local/jails/share/ule-letsencrypt usr/local/etc/letsencrypt nullfs ro 0 0
+CMD mkdir -p /usr/local/etc/www
+MOUNT /usr/local/jails/nginx-TEST/ul-www usr/local/www nullfs rw 0 0
 CMD mkdir -p /usr/local/etc/nginx
-MOUNT /zroot/usr/local/jails/nginx-TEST/ule-nginx usr/local/etc/nginx nullfs rw 0 0
+MOUNT /usr/local/jails/nginx-TEST/ule-nginx usr/local/etc/nginx nullfs rw 0 0
 
 CMD printf '####\n#### Setup: SYSRC\n####\n'
 SYSRC goaccess_enable="YES"
@@ -20,6 +22,9 @@ CMD printf '####\n#### Setup: Overlay etc\n####\n'
 OVERLAY etc
 
 CMD printf '####\n#### Setup: Pre start commands\n####\n'
+CMD printf 'Cron Error is normal. ..lol'
+CMD ( crontab -l -u root ; echo "0 * * * * /usr/local/bin/goaccess -f /var/log/nginx/access.log --log-format=VCOMBINED -p /usr/local/etc/goaccess/goaccess.conf -o /usr/local/www/goaccess/index.html" ) | crontab -
+
 CMD nginx -t
 
 CMD printf '####\n#### Start Services\n####\n'
